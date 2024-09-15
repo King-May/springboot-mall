@@ -1,6 +1,7 @@
 package net.may.springbootmall.model;
 
 import net.may.springbootmall.constant.ProductCategory;
+import net.may.springbootmall.dto.ProductRequest;
 
 import java.util.Date;
 
@@ -17,6 +18,19 @@ public class Product {
 
     public Integer getProductId() {
         return productId;
+    }
+
+    public static Product createProductFromProductRequest(ProductRequest productRequest) {
+        Product product = new Product();
+
+        product.setProductName(productRequest.getProductName());
+        product.setCategory(productRequest.getCategory());
+        product.setImagUrl(productRequest.getImagUrl());
+        product.setPrice(productRequest.getPrice());
+        product.setStock(productRequest.getStock());
+        product.setDescription(productRequest.getDescription());
+
+        return product;
     }
 
     public void setProductId(Integer productId) {

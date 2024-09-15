@@ -1,13 +1,13 @@
 package net.may.springbootmall.controller;
 
+import jakarta.validation.Valid;
+import net.may.springbootmall.dto.ProductRequest;
 import net.may.springbootmall.model.Product;
 import net.may.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
@@ -25,5 +25,11 @@ public class ProductController {
         return productService.getProductById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest) {
+        Product product = productService.createProduct(productRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 }
