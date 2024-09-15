@@ -5,7 +5,6 @@ import net.may.springbootmall.dto.ProductRequest;
 import net.may.springbootmall.model.Product;
 import net.may.springbootmall.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -59,5 +58,24 @@ public class ProductDaoImpl implements ProductDao {
         product.setLastModifiedDate(now);
 
         return product;
+    }
+
+    @Override
+    public void putProduct(Integer id, ProductRequest productRequest) {
+        String sql = "UPDATE product SET product_name = :product_name, category = :category, image_url = :image_url, price = :price, stock = :stock, description = :description, last_modified_date = :last_modified_date WHERE product_id = :product_id";
+
+        Date now = new Date();
+
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("product_name", productRequest.getProductName())
+                .addValue("category", productRequest.getCategory().name())
+                .addValue("image_url", productRequest.getImagUrl())
+                .addValue("price", productRequest.getPrice())
+                .addValue("stock", productRequest.getStock())
+                .addValue("description", productRequest.getDescription())
+                .addValue("last_modified_date", now)
+                .addValue("product_id", id);
+
+        jdbcTemplate.update(sql, params);
     }
 }

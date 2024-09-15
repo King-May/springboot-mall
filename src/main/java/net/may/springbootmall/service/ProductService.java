@@ -10,4 +10,6 @@ public interface ProductService {
     Optional<Product> getProductById(int id);
 
     Product createProduct(ProductRequest product);
+
+    void putProduct(Integer id, ProductRequest product);
 }

@@ -32,4 +32,10 @@ public class ProductController {
         Product product = productService.createProduct(productRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> putProduct(@PathVariable Integer id, @RequestBody @Valid ProductRequest productRequest) {
+        productService.putProduct(id, productRequest);
+        return ResponseEntity.ok(productService.getProductById(id).get());
+    }
 }
