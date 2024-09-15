@@ -1,6 +1,8 @@
 package net.may.springbootmall.controller;
 
 import jakarta.validation.Valid;
+import net.may.springbootmall.constant.ProductCategory;
+import net.may.springbootmall.dto.ProductQueryParams;
 import net.may.springbootmall.dto.ProductRequest;
 import net.may.springbootmall.model.Product;
 import net.may.springbootmall.service.ProductService;
@@ -22,8 +24,15 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts() {
-        return ResponseEntity.ok(productService.getProducts());
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search) {
+
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        return ResponseEntity.ok(productService.getProducts(productQueryParams));
     }
 
     @GetMapping("/product/{id}")

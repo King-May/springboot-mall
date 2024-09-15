@@ -1,6 +1,8 @@
 package net.may.springbootmall.service.impl;
 
+import net.may.springbootmall.constant.ProductCategory;
 import net.may.springbootmall.dao.ProductDao;
+import net.may.springbootmall.dto.ProductQueryParams;
 import net.may.springbootmall.dto.ProductRequest;
 import net.may.springbootmall.model.Product;
 import net.may.springbootmall.service.ProductService;
@@ -21,8 +23,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productDao.getProducts();
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override

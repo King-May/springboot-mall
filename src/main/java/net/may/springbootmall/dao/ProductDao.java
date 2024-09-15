@@ -1,5 +1,6 @@
 package net.may.springbootmall.dao;
 
+import net.may.springbootmall.dto.ProductQueryParams;
 import net.may.springbootmall.dto.ProductRequest;
 import net.may.springbootmall.model.Product;
 
@@ -7,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductDao {
-    List<Product> getProducts();
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Optional<Product> getProductById(int id);
 
