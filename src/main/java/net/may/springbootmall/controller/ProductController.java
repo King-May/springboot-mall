@@ -1,6 +1,8 @@
 package net.may.springbootmall.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import net.may.springbootmall.constant.ProductCategory;
 import net.may.springbootmall.dto.ProductQueryParams;
 import net.may.springbootmall.dto.ProductRequest;
@@ -9,10 +11,12 @@ import net.may.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 public class ProductController {
 
@@ -27,8 +31,12 @@ public class ProductController {
     public ResponseEntity<List<Product>> getProducts(
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
+
             @RequestParam(required = false, defaultValue = "created_date") String order,
-            @RequestParam(required = false, defaultValue = "desc") String sort
+            @RequestParam(required = false, defaultValue = "desc") String sort,
+
+            @RequestParam(required = false, defaultValue = "5") @Max(100) @Min(1) Integer limit,
+            @RequestParam(required = false, defaultValue = "0") @Min(1) Integer offset
     ) {
 
         ProductQueryParams productQueryParams = new ProductQueryParams();
@@ -36,6 +44,8 @@ public class ProductController {
         productQueryParams.setSearch(search);
         productQueryParams.setOrder(order);
         productQueryParams.setSort(sort);
+        productQueryParams.setLimit(limit);
+        productQueryParams.setOffset(offset);
 
         return ResponseEntity.ok(productService.getProducts(productQueryParams));
     }
