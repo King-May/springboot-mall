@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -22,6 +23,12 @@ public class ProductDaoImpl implements ProductDao {
     @Autowired
     public ProductDaoImpl(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<Product> getProducts() {
+        String sql = "select product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date from product";
+        return jdbcTemplate.query(sql, ProductRowMapper.INSTANCE);
     }
 
     @Override

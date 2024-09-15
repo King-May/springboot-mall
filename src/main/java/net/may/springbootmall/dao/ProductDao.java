@@ -3,9 +3,12 @@ package net.may.springbootmall.dao;
 import net.may.springbootmall.dto.ProductRequest;
 import net.may.springbootmall.model.Product;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductDao {
+    List<Product> getProducts();
+
     Optional<Product> getProductById(int id);
 
     Product createProduct(ProductRequest product);
