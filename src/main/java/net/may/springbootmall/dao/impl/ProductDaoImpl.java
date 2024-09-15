@@ -24,11 +24,8 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Optional<Product> getProductById(int id) {
         String sql = "select product_id, product_name, category, image_url, price, stock, description, created_date, last_modified_date from product where product_id = :id";
-        try {
-            Product product = jdbcTemplate.queryForObject(sql, new MapSqlParameterSource("id", id), ProductRowMapper.INSTANCE);
-            return Optional.ofNullable(product);
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+        return jdbcTemplate.query(sql, new MapSqlParameterSource("id", id), ProductRowMapper.INSTANCE)
+                .stream()
+                .findFirst();
     }
 }
